@@ -1,0 +1,22 @@
+name: 'Dependency Review'
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: 'Dependency Review'
+        uses: actions/dependency-review-action@v4
+        with:
+          show-openssf-scorecard: false
+          vulnerability-check: true
+          comment-summary-in-pr: true
+          deny-packages: 'pkg:npm/@radix-ui/react-accordion@1.0.1, pkg:npm/@radix-ui/react-checkbox@1.0.1, pkg:npm/vite@4.4.4'
