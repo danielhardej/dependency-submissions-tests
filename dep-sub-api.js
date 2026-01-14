@@ -12,8 +12,9 @@ const response = await octokit.request('POST /repos/{owner}/{repo}/dependency-gr
   sha: '023f32073265163c2525f987609a6643e695f755',
   ref: 'refs/heads/not-main',
   job: {
-    id: 60302562045,
+    id: process.env.GITHUB_RUN_ID,
     correlator: `${process.env.GITHUB_WORKFLOW}-${process.env.GITHUB_JOB}`,
+    html_url: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
   },
   detector: {
     name: 'component-detection-action',
