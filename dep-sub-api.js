@@ -2,25 +2,26 @@ import { Octokit } from 'octokit'
 // Octokit.js
 // https://github.com/octokit/core.js#readme
 const octokit = new Octokit({
-  auth: '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'
+  auth: process.env.GITHUB_TOKEN
 })
 
 await octokit.request('POST /repos/{owner}/{repo}/dependency-graph/snapshots', {
-  owner: 'OWNER',
-  repo: 'REPO',
+  owner: 'danielhardej',
+  repo: 'dependency-submissions-tests',
   version: 0,
-  sha: 'ce587453ced02b1526dfb4cb910479d431683101',
-  ref: 'refs/heads/main',
+  sha: '023f32073265163c2525f987609a6643e695f755',
+  ref: 'refs/heads/not-main',
   job: {
-    correlator: 'yourworkflowname_youractionname',
-    id: 'yourrunid'
+    id: process.env.GITHUB_RUN_ID,
+    correlator: `${process.env.GITHUB_WORKFLOW}-${process.env.GITHUB_JOB}`,
+    html_url: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
   },
   detector: {
-    name: 'octo-detector',
-    version: '0.0.1',
-    url: 'https://github.com/octo-org/octo-repo'
+    name: 'component-detection-action',
+    version: process.env.GITHUB_ACTION_REF || 'v0.1.0',
+    url: 'https://github.com/advanced-security/component-detection-dependency-submission-action'
   },
-  scanned: '2022-06-14T20:25:00Z',
+  scanned: new Date().toISOString(),
   manifests: {
     'package-lock.json': {
       name: 'package-lock.json',
