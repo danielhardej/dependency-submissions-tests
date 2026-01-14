@@ -17,7 +17,7 @@ jobs:
       - name: 'Dependency Review'
         uses: actions/dependency-review-action@v4
         with:
-          show-openssf-scorecard: true
+          show-openssf-scorecard: false
           vulnerability-check: false
           comment-summary-in-pr: true
-          deny-packages: 'pkg:npm/@radix-ui/react-accordion@1.0.1, pkg:npm/%40radix-ui/react-checkbox@1.0.1, pkg:npm/vite@4.4.4'
+          deny-packages: 'pkg:npm/@radix-ui/react-accordion@1.0.1, pkg:npm/@radix-ui/react-checkbox@1.0.1, pkg:npm/vite@4.4.4, pkg:npm/universal-user-agent@7.0.3, pkg:npm/universal-github-app-jwt@2.2.2'
