@@ -5,16 +5,15 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN
 })
 
-await octokit.request('POST /repos/{owner}/{repo}/dependency-graph/snapshots', {
+const response = await octokit.request('POST /repos/{owner}/{repo}/dependency-graph/snapshots', {
   owner: 'danielhardej',
   repo: 'dependency-submissions-tests',
   version: 0,
   sha: '023f32073265163c2525f987609a6643e695f755',
   ref: 'refs/heads/not-main',
   job: {
-    id: process.env.GITHUB_RUN_ID,
+    id: 60302562045,
     correlator: `${process.env.GITHUB_WORKFLOW}-${process.env.GITHUB_JOB}`,
-    html_url: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
   },
   detector: {
     name: 'component-detection-action',
@@ -26,7 +25,7 @@ await octokit.request('POST /repos/{owner}/{repo}/dependency-graph/snapshots', {
     'package-lock.json': {
       name: 'package-lock.json',
       file: {
-        source_location: 'src/package-lock.json'
+        source_location: 'package-lock.json'
       },
       resolved: {
         '@actions/core': {
@@ -50,4 +49,11 @@ await octokit.request('POST /repos/{owner}/{repo}/dependency-graph/snapshots', {
   headers: {
     'X-GitHub-Api-Version': '2022-11-28'
   }
-})
+});
+
+// Log the full response for debugging
+console.log('::group::Dependency Submission API Response');
+console.log('Status:', response.status);
+console.log('Headers:', JSON.stringify(response.headers, null, 2));
+console.log('Body:', JSON.stringify(response.data, null, 2));
+console.log('::endgroup::');

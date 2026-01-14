@@ -16,4 +16,7 @@ jobs:
       - run: npm ci
       - run: node dep-sub-api.js
         env:
+          NODE_DEBUG: http, https
+          ACTIONS_STEP_DEBUG: true
+          DEBUG: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
